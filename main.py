@@ -325,7 +325,6 @@ def main():
 
         #SELECT GENES
         ex = load_geneexp()
-        st.dataframe(ex.head()) 
         #st.write(ex.shape)
         genes = st.multiselect("Select your desired genes", options=(ex.columns[1:]))
 
