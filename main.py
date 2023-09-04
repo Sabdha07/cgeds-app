@@ -320,11 +320,19 @@ def main():
 
         #SELECT GENES
         ex = load_geneexp()
+        st.write(ex.head()) 
         #st.write(ex.shape)
         genes = st.multiselect("Select your desired genes", options=(ex.columns[1:]))
 
         #filtering off the unselected genes
-        ex_filtered = pd.DataFrame(pd.concat([ex["cell_line"], ex[genes]], axis=1))
+        #ex_filtered = pd.DataFrame(pd.concat([ex["cell_line"], ex[genes]], axis=1))
+            # Filtering off the unselected genes
+        if genes:
+                    ex_filtered = pd.DataFrame(pd.concat([ex["cell_line"], ex[genes]], axis=1))
+                    st.write("Filtered DataFrame:")
+                    st.dataframe(ex_filtered)
+        else:
+                    st.warning("No genes selected.")
 
         #merge drugs and gene expression
         df = pd.merge(ds, ex_filtered, on="cell_line")
