@@ -127,12 +127,13 @@ def main():
         @st.cache_data
         def load_geneexp():
             zipfile_path = 'data/Gene-expression-data-GDSC.zip'
-            extracted_dir = 'data'
+            csv_file_name = 'Gene-expression-data-GDSC.csv'
+
             with zipfile.ZipFile(zipfile_path, 'r') as zip_ref:
-                zip_ref.extractall(extracted_dir)
-            
-            ex = pd.read_csv('data/Gene-expression-data-GDSC.csv')
-            return pd.DataFrame(ex)
+                        with zip_ref.open(csv_file_name) as file:
+                                    ex = pd.read_csv(file)
+
+            return ex
 
         ## FUNCTIONS ##
 
