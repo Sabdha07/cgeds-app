@@ -130,21 +130,10 @@ def main():
         #Load gene expression data
         @st.cache_data
         def load_geneexp():
-            lfs_url = 'https://github.com/Sabdha07/cgeds-app/blob/c7069e0686975647f325a4ac63d7062b22932ee1/data/Gene-expression-data-GDSC.csv'
-
-            # Make an HTTP GET request to the LFS URL
-            response = requests.get(lfs_url)
-
-            # Check if the request was successful
-            if response.status_code == 200:
-                # Parse the CSV data from the response content
-                csv_data = response.text
-                # Create a DataFrame from the CSV data
-                ex = pd.read_csv(pd.compat.StringIO(csv_data))
-            else:
-                # Handle the case where the request failed
-                print(f"Failed to retrieve data. Status code: {response.status_code}")
-            #ex = pd.read_csv('data/Gene-expression-data-GDSC.csv')
+            url = 'https://media.githubusercontent.com/media/Sabdha07/cgeds-app/main/data/Gene-expression-data-GDSC.csv'
+            s=requests.get(url).content
+            ex =pd.read_csv(io.StringIO(s.decode('utf-8')))
+            
             #debug phase1
             ex = ex.rename(columns={"Cell line ": "cell_line", "Cell line": "cell_line"})
             return ex
