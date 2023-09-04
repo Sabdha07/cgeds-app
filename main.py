@@ -115,23 +115,8 @@ def main():
         # Load the first dataset
         @st.cache_data
         def load_dataset1():
-            csv_url = 'https://drive.google.com/file/d/1Td3NUOHq_eOgXk0vPl2trcDG6tl4kacu/view?usp=sharing'
-    
-            try:
-                response = requests.get(csv_url)
-                response.raise_for_status()  # Check if the request was successful
-                
-                # Parse the CSV content from the response
-                csv_data = StringIO(response.text)
-                
-                # Load the CSV data into a DataFrame
-                dataset = pd.read_csv(csv_data)
-                
-                return dataset
-            except Exception as e:
-                print(f"An error occurred: {str(e)}")
-                return None
-            
+            dataset = pd.read_csv('/data/Drug-sensitivity-data-GDSC1.csv')
+            return pd.DataFrame(dataset)
 
         # Load the second dataset
         @st.cache_data
