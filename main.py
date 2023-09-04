@@ -114,18 +114,24 @@ def main():
         @st.cache_data
         def load_dataset1():
             dataset = pd.read_csv('data/Drug-sensitivity-data-GDSC1.csv')
+            #debug phase1
+            dataset = dataset.rename(columns={"Cell line ": "cell_line", "Cell line": "cell_line"})
             return pd.DataFrame(dataset)
 
         # Load the second dataset
         @st.cache_data
         def load_dataset2():
             dataset = pd.read_csv('data/Drug-sensitivity-data-GDSC2.csv')
+            #debug phase1
+            dataset = dataset.rename(columns={"Cell line ": "cell_line", "Cell line": "cell_line"})
             return pd.DataFrame(dataset)
 
         #Load gene expression data
         @st.cache_data
         def load_geneexp():
             ex = pd.read_csv('data/Gene-expression-data-GDSC.csv')
+            #debug phase1
+            ex = ex.rename(columns={"Cell line ": "cell_line", "Cell line": "cell_line"})
             return ex
 
         ## FUNCTIONS ##
@@ -318,11 +324,7 @@ def main():
         genes = st.multiselect("Select your desired genes", options=(ex.columns[1:]))
 
         #filtering off the unselected genes
-        ex_filtered = pd.DataFrame(pd.concat([ex["Cell line"], ex[genes]], axis=1))
-
-        #debug phase1
-        ds = ds.rename(columns={"Cell line ": "cell_line", "Cell line": "cell_line"})
-        ex_filtered = ex_filtered.rename(columns={"Cell line": "cell_line"})
+        ex_filtered = pd.DataFrame(pd.concat([ex["cell_line"], ex[genes]], axis=1))
 
         #merge drugs and gene expression
         df = pd.merge(ds, ex_filtered, on="cell_line")
