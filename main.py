@@ -115,7 +115,7 @@ def main():
         # Load the first dataset
         @st.cache_data
         def load_dataset1():
-            dataset = pd.read_csv('/data/Drug-sensitivity-data-GDSC1.csv')
+            dataset = pd.read_csv('data/Drug-sensitivity-data-GDSC1.csv')
             return pd.DataFrame(dataset)
 
         # Load the second dataset
