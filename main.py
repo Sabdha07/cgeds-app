@@ -1,6 +1,5 @@
 import streamlit as st
 
-import zipfile
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -126,13 +125,7 @@ def main():
         #Load gene expression data
         @st.cache_data
         def load_geneexp():
-            zipfile_path = 'data/Gene-expression-data-GDSC.zip'
-            csv_file_name = 'Gene-expression-data-GDSC.csv'
-
-            with zipfile.ZipFile(zipfile_path, 'r') as zip_ref:
-                        with zip_ref.open(csv_file_name) as file:
-                                    ex = pd.read_csv(file)
-
+            ex = pd.read_csv('data/Gene-expression-data-GDSC.csv')
             return ex
 
         ## FUNCTIONS ##
