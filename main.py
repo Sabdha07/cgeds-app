@@ -329,12 +329,11 @@ def main():
         genes = st.multiselect("Select your desired genes", options=(ex.columns[1:]))
 
         #filtering off the unselected genes
-        #ex_filtered = pd.DataFrame(pd.concat([ex["cell_line"], ex[genes]], axis=1))
-            # Filtering off the unselected genes
+        ex_filtered = pd.DataFrame(columns=['cell_line'])
         if genes:
                     ex_filtered = pd.DataFrame(pd.concat([ex["cell_line"], ex[genes]], axis=1))
-                    st.write("Filtered DataFrame:")
-                    st.dataframe(ex_filtered)
+                    #st.write("Filtered DataFrame:")
+                    #st.dataframe(ex_filtered)
         else:
                     st.warning("No genes selected.")
 
@@ -361,26 +360,27 @@ def main():
             showdata = show_data
             vis = visualize
             calculated_corrs, show_visualization = calculate_correlations(df, fdr, pos, neg,showdata,vis)
+            if not calculated_corrs.empty:
+                        if show_data:
+                            st.write("Calculated and Filtered Data:")
+                            st.write(calculated_corrs)
             
-            if show_data:
-                st.write("Calculated Data:")
-                st.write(calculated_corrs)
-
-                if show_visualization:
-                    st.write("Heat Map for all genes and drug pairs:")
-                    heatmap_plot(calculated_corrs)
-                    st.divider()
-                    st.write("Clustered bar plot for all genes and drug pairs:")
-                    create_clustered_bar_plot(calculated_corrs)
-
+                            if show_visualization:
+                                st.write("Heat Map for all genes and drug pairs:")
+                                heatmap_plot(calculated_corrs)
+                                st.divider()
+                                st.write("Clustered bar plot for all genes and drug pairs:")
+                                create_clustered_bar_plot(calculated_corrs)
+            
+                        else:
+                            if show_visualization:
+                                st.write("Heat Map for all genes and drug pairs:")
+                                heatmap_plot(calculated_corrs)
+                                st.divider()
+                                st.write("Clustered bar plot for all genes and drug pairs:")
+                                create_clustered_bar_plot(calculated_corrs)
             else:
-                if show_visualization:
-                    st.write("Heat Map for all genes and drug pairs:")
-                    heatmap_plot(calculated_corrs)
-                    st.divider()
-                    st.write("Clustered bar plot for all genes and drug pairs:")
-                    create_clustered_bar_plot(calculated_corrs)
-
+                        st.write("No gene-drug pairs with the given threshold values were found.")
 
 
     
