@@ -26,19 +26,6 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 # Define the app version
 app_version = "1.0.0"
 
-# Header
-st.title('cGEDs - Cancer Gene Expression and Drug Sensitivity')
-st.write('Battling Cancer, One Gene at a Time')
-st.write('Version:', app_version)
-
-# Footer
-st.sidebar.markdown('---')
-st.sidebar.write("## Contact")
-st.sidebar.write("Have questions, comments, or found a bug?")
-st.sidebar.write("Get in touch:")
-st.sidebar.write("Email: [sabwor07@gmail.com](mailto:sabwor07@gmail.com)")
-
-
 def main():
     st.sidebar.title("cGEDs - Battling Cancer, One Gene at a Time!")
     navigation_option = st.sidebar.radio(label= 'navigate',label_visibility='hidden', options = ["What is the app about?","cGEDs: Pick the genes and find the best drug", "User Guide"])    
@@ -49,6 +36,8 @@ def main():
     st.sidebar.write("Have questions, comments, or found a bug?")
     st.sidebar.write("Get in touch:")
     st.sidebar.write("Email: [sabwor07@gmail.com](mailto:sabwor07@gmail.com)")
+    st.sidebar.write("-----")
+    st.write('Version:', app_version)
     
 
     if navigation_option == "User Guide":
