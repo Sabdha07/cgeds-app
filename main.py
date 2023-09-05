@@ -23,6 +23,21 @@ hide_st_style = """
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
+# Define the app version
+app_version = "1.0.0"
+
+# Header
+st.title('cGEDs - Cancer Gene Expression and Drug Sensitivity')
+st.write('Battling Cancer, One Gene at a Time')
+st.write('Version:', app_version)
+
+# Footer
+st.sidebar.markdown('---')
+st.sidebar.write("## Contact")
+st.sidebar.write("Have questions, comments, or found a bug?")
+st.sidebar.write("Get in touch:")
+st.sidebar.write("Email: [sabwor07@gmail.com](mailto:sabwor07@gmail.com)")
+
 
 def main():
     st.sidebar.title("cGEDs - Battling Cancer, One Gene at a Time!")
@@ -177,7 +192,31 @@ def main():
             plt.tight_layout()
             
             st.pyplot(plt)
-
+                    
+        def create_grouped_barplot(df):
+            # plot
+            sns.set_theme(style="whitegrid")
+            fig, ax = plt.subplots(figsize=(10,5))
+            sns.barplot(data=df, x='Correlation', y='Gene', hue='Drug', errorbar = ('ci',False), orient='horizontal', dodge=True)
+            # Annotate each bar with its correlation value
+            for p in ax.patches:
+                height = p.get_height()
+                width = p.get_width()
+                correlation_value = width  # Use the width of the bar as the correlation value 
+                if correlation_value > 0:
+                  text_x = width   # Adjust the x-coordinate of the annotation text
+                if correlation_value <= 0:
+                  text_x = width  # Adjust the x-coordinate of the annotation text
+                text_color = 'black'
+            
+                ax.annotate(format(correlation_value, ".2f"),
+                            xy=(correlation_value, p.get_y() + height / 2),
+                            ha='center', va='center',
+                            color=text_color)
+            
+            # Show the plot
+            st.pyplot(plt)
+                
         #heatmap
         def heatmap_plot(df):
             num_genes = len(df['Gene'].unique())
@@ -371,6 +410,10 @@ def main():
                                 st.divider()
                                 st.write("Clustered bar plot for all genes and drug pairs:")
                                 create_clustered_bar_plot(calculated_corrs)
+                                st.divider()
+                                st.write("Grouped bar plot for all genes and drug pairs:")
+                                create_grouped_barplot(calculated_corrs)
+                                    
             
                         else:
                             if show_visualization:
@@ -378,7 +421,10 @@ def main():
                                 heatmap_plot(calculated_corrs)
                                 st.divider()
                                 st.write("Clustered bar plot for all genes and drug pairs:")
-                                create_clustered_bar_plot(calculated_corrs)
+                                create_clustered_bar_plot(calculated_corrs)                                
+                                st.divider()
+                                st.write("Grouped bar plot for all genes and drug pairs:")
+                                create_grouped_barplot(calculated_corrs)
             else:
                         st.write("No gene-drug pairs with the given threshold values were found.")
 
