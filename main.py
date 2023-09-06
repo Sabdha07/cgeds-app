@@ -28,6 +28,13 @@ app_version = "1.0.0"
 
 #app
 def main():
+    # ---- HEADER SECTION ----
+    with st.container():
+        st.title('cGEDs - Cancer Gene Expression and Drug Sensitivity')
+	st.write('An application for finding drug effectivity biomarkers in different cancer types')
+	st.write('Version:', app_version)
+
+    # ---- SIDEBAR ----
     st.sidebar.title("cGEDs")
     navigation_option = st.sidebar.radio(label= 'navigate',label_visibility='hidden', options = ["What is the app about?","cGEDs: Pick the genes and find the best drug", "User Guide"])    
     
@@ -38,9 +45,9 @@ def main():
     st.sidebar.write("Get in touch:")
     st.sidebar.write("Email: [sabwor07@gmail.com](mailto:sabwor07@gmail.com)")
     st.sidebar.write("-----")
-    st.write('Version:', app_version)
     
 
+	    
     if navigation_option == "User Guide":
         st.title("App Usage: User Guide")
 
@@ -224,10 +231,7 @@ def main():
                     return None, False
 
 
-        # ---- HEADER SECTION ----
-        with st.container():
-            st.title('cGEDs - Cancer Gene Expression and Drug Sensitivity')
-            st.write('An application for finding drug effectivity biomarkers in different cancer types')
+
             
         st.divider()
 
