@@ -31,8 +31,8 @@ def main():
     # ---- HEADER SECTION ----
     with st.container():
         st.title('cGEDs - Cancer Gene Expression and Drug Sensitivity')
-	st.write('An application for finding drug effectivity biomarkers in different cancer types')
-	st.write('Version:', app_version)
+        st.write('An application for finding drug effectivity biomarkers in different cancer types')
+        st.write('Version:', app_version)
 
     # ---- SIDEBAR ----
     st.sidebar.title("cGEDs")
@@ -73,14 +73,12 @@ def main():
     
 
     if navigation_option == "What is the app about?":
-        st.title("About cGEDs - Cancer Gene Expression and Drug Sensitivity")
-        st.markdown("**Advancing Cancer Insights for Enhaced Drug Selection**")
-
+        
+        st.markdown("## Advancing Cancer Insights for Enhaced Drug Selection")
         st.write("Cancer is a global health issue and a leading cause of death, responsible for approximately 9.6 million deaths in 2018. Traditional treatments face challenges due to the complexity of diverse cancer types and the unique genetic profiles of patients. The effectiveness of a drug depends on the specific interaction between genes and cancer cells. So, tailored treatment solutions become crucial as drugs may not perform uniformly across different cancer types and patients.")
-
         st.write("To assist with some of the challenges in cancer treatment, CGEDS has been developed with the motive to serve as a guide built upon existing data. CGEDS is designed to aid researchers and healthcare professionals in making more informed decisions regarding drug selection.")
 
-        st.markdown("## How It Works?")
+        st.markdown("## How does cGEDs work?")
         st.write("CGEDS merges gene expression and drug sensitivity data(IC50 values) for the selected cancer type and using this combined information, it calculates the correlations between gene expressions and drug sensitivities. These correlations offer valuable insights, enabling researchers and healthcare professionals to analyze drug-gene interactions. This data-driven approach enhances our understanding of how drugs may interact with individual patient profiles, empowering more informed treatment decisions. The data used is sourced from publicly accessible repositories, ensuring comprehensive and credible input for the analysis.")
 
 
