@@ -228,11 +228,6 @@ def main():
                 else:
                     return None, False
 
-
-
-            
-        st.divider()
-
         ## ---- PIPELINE ---- ##
 
         #SELECT DATASET
