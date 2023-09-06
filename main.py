@@ -61,7 +61,7 @@ def main():
         st.header("Data Visualization")
         st.write("You can choose to display calculated data and visualize it using the following options:")
         st.write("- Display calculated data: Check this option to display the calculated correlations between genes and drugs.")
-        st.write("- Display heat map and cluster bar plot: Check this option to visualize the calculated correlations using a heatmap and a clustered bar plot.")
+        st.write("- Display heat map: Check this option to visualize the calculated correlations using a heatmap.")
 
 
 
@@ -145,72 +145,11 @@ def main():
 
         ## FUNCTIONS ##
 
-        #clustered bar plot
-        def create_clustered_bar_plot(df):
-            num_genes = len(df['Gene'].unique())
-            num_drugs = len(df['Drug'].unique())
-            figsize = (num_genes * 3, 10)  # Adjust the scaling factor as needed
-            
-            plt.figure(figsize=figsize)
-            sns.set_palette('bright')
-            ax = sns.barplot(data=df, x='Gene', y='Correlation', hue='Drug')
-            
-            # Set labels and title
-            plt.xlabel('Gene')
-            plt.ylabel('Correlation')
-            plt.title('Clustered Bar Plot of Gene-Drug Correlations')
-            
-            plt.xticks(rotation=45)
-            plt.legend(title='Drug', bbox_to_anchor=(1.05, 1), loc='upper left')
-            
-            # Annotate the bars with their correlation values
-            for p in ax.patches:
-                height = p.get_height()
-                annotation_text = format(height, ".2f")
-                text_y = height + 0.05 if height >= 0 else height - 0.05
-                text_color = 'black' 
-
-                ax.annotate(annotation_text, 
-                            (p.get_x() + p.get_width() / 2., height), 
-                            ha='center', va='center', 
-                            xytext=(0, 10) if height >= 0 else (0, -10), 
-                            textcoords='offset points',
-                            rotation=90,
-                            color=text_color)
-            
-            plt.tight_layout()
-            
-            st.pyplot(plt)
-                    
-        def create_grouped_barplot(df):
-            # plot
-            sns.set_theme(style="whitegrid")
-            fig, ax = plt.subplots(figsize=(10,5))
-            sns.barplot(data=df, x='Correlation', y='Gene', hue='Drug', errorbar = ('ci',False), orient='horizontal', dodge=True)
-            # Annotate each bar with its correlation value
-            for p in ax.patches:
-                height = p.get_height()
-                width = p.get_width()
-                correlation_value = width  # Use the width of the bar as the correlation value 
-                if correlation_value > 0:
-                  text_x = width   # Adjust the x-coordinate of the annotation text
-                if correlation_value <= 0:
-                  text_x = width  # Adjust the x-coordinate of the annotation text
-                text_color = 'black'
-            
-                ax.annotate(format(correlation_value, ".2f"),
-                            xy=(correlation_value, p.get_y() + height / 2),
-                            ha='center', va='center',
-                            color=text_color)
-            
-            # Show the plot
-            st.pyplot(plt)
-                
         #heatmap
         def heatmap_plot(df):
             num_genes = len(df['Gene'].unique())
             num_drugs = len(df['Drug'].unique())
-            figsize = (num_genes * 1.3, num_drugs * 1.3)  # Adjust the scaling factor as needed
+            figsize = max(3,3,(num_genes * 0.2, num_drugs * 0.2))
             
             plt.figure(figsize=figsize)
 
@@ -222,6 +161,10 @@ def main():
             plt.tight_layout()
             st.pyplot(plt)
 
+        #convert df to csv for download
+        @st.cache
+        def convert_df(df):
+	return df.to_csv().encode('utf-8')
 
         #correlation calculation
         def calculate_correlations(df, fdr_thr, pos_cor_thr, neg_cor_thr, show_data, visualize):
@@ -378,7 +321,7 @@ def main():
 
         with st.container():
             show_data = st.checkbox("Display calculated data")
-            visualize = st.checkbox('Display heat map and cluster bar plot')
+            visualize = st.checkbox('Display heat map')
 
         #Calculate correlations
         if st.button('Calculate Correlations'):  
@@ -396,24 +339,15 @@ def main():
                             if show_visualization:
                                 st.write("Heat Map for all genes and drug pairs:")
                                 heatmap_plot(calculated_corrs)
-                                st.divider()
-                                st.write("Clustered bar plot for all genes and drug pairs:")
-                                create_clustered_bar_plot(calculated_corrs)
-                                st.divider()
-                                st.write("Grouped bar plot for all genes and drug pairs:")
-                                create_grouped_barplot(calculated_corrs)
                                     
-            
                         else:
                             if show_visualization:
                                 st.write("Heat Map for all genes and drug pairs:")
                                 heatmap_plot(calculated_corrs)
-                                st.divider()
-                                st.write("Clustered bar plot for all genes and drug pairs:")
-                                create_clustered_bar_plot(calculated_corrs)                                
-                                st.divider()
-                                st.write("Grouped bar plot for all genes and drug pairs:")
-                                create_grouped_barplot(calculated_corrs)
+                        download_csv = convert_df(calculated_corrs)
+		#download button
+		st.download_button(label="Download data as CSV",  data=download_csv,
+			       file_name='calculated_correlations.csv',  mime='text/csv')
             else:
                         st.write("No gene-drug pairs with the given threshold values were found.")
 
