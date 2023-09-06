@@ -26,6 +26,7 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 # Define the app version
 app_version = "1.0.0"
 
+#app
 def main():
     st.sidebar.title("cGEDs")
     navigation_option = st.sidebar.radio(label= 'navigate',label_visibility='hidden', options = ["What is the app about?","cGEDs: Pick the genes and find the best drug", "User Guide"])    
