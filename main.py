@@ -27,7 +27,7 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 app_version = "1.0.0"
 
 def main():
-    st.sidebar.title("cGEDs - Battling Cancer, One Gene at a Time!")
+    st.sidebar.title("cGEDs")
     navigation_option = st.sidebar.radio(label= 'navigate',label_visibility='hidden', options = ["What is the app about?","cGEDs: Pick the genes and find the best drug", "User Guide"])    
     
     st.divider()
@@ -62,55 +62,19 @@ def main():
         st.write("You can choose to display calculated data and visualize it using the following options:")
         st.write("- Display calculated data: Check this option to display the calculated correlations between genes and drugs.")
         st.write("- Display heat map: Check this option to visualize the calculated correlations using a heatmap.")
-
-
+    
 
     if navigation_option == "What is the app about?":
         st.title("About cGEDs - Cancer Gene Expression and Drug Sensitivity")
-        st.markdown("🔬 **Unleashing Precision Medicine: CGEDS - The Cancer Genomics Guide for Drug Selection**")
-        st.write("Battling Cancer, One Gene at a Time")
-        
-        st.markdown("🌍 **Global Impact of Cancer**")
-        st.write("- Cancer, a relentless adversary, affects millions of lives globally.")
-        st.write("- Its indiscriminate nature and the dire need for personalized treatments have intensified the quest for groundbreaking solutions.")
-        st.write("- According to the World Health Organization (WHO), cancer is a leading cause of death worldwide, with an estimated 9.6 million deaths in 2018.")
-        st.write("- Conventional treatments often fall short due to the complex interplay between diverse cancer cell lines and the intricate genetic makeup of individual patients.")
-        
-        st.markdown("## The Challenge: A Symphony of Variability")
-        st.write("🎭 **Diverse and Complex Cancers**")
-        st.write("- Cancers are as diverse as the patients they afflict, with varying gene expressions that drive their behaviors.")
-        st.write("- The efficacy of a drug depends on this complex interaction between genes and cancer cell lines.")
-        st.write("- The same drug might hold a silver bullet for one type of cancer but fall short for another.")
-        st.write("- Traditional treatments, often generalized, miss the mark due to this intricate variability.")
-        
-        st.markdown("## CGEDS - The Personalized Cancer Guide for Drug Selection")
-        st.write("🚀 **Revolutionizing Cancer Treatment**")
-        st.write("- CGEDS is designed to revolutionize the landscape of cancer treatment.")
-        st.write("- The app is a manifestation of the fusion of gene expression data and drug sensitivity profiles, all united with the shared goal of creating a better future for cancer patients.")
-        
-        st.markdown("### Empowering Precision Medicine:")
-        st.write("💡 **Predicting Tumor Response**")
-        st.write("- At the heart of CGEDS lies the ability to predict tumor response to drugs based on gene-expression biomarkers.")
-        st.write("- This unprecedented power stems from the integration of diverse datasets from cancer cell lines, providing a rich source of information about drug efficacy.")
-        
-        st.markdown("## How It Works")
-        st.write("🚀 **Empowering Clinicians and Researchers**")
-        st.write("- CGEDS integrates gene expression and drug sensitivity profiles from an extensive range of cancer cell line datasets.")
-        st.write("- By doing so, it calculates correlations between gene expressions and drug sensitivities across multiple cancer types, transcending the limitations of conventional analyses.")
-        
-        st.markdown("## Why CGEDS is the Game-Changer")
-        st.write("1. 🎯 **Personalization in Action**")
-        st.write("   The app transforms a one-size-fits-all approach into a personalized strategy, offering insights into the most effective treatments based on individual cancer profiles.")
-        st.write("2. 🧪 **Research Meets Reality**")
-        st.write("   The app's predictive models bridge the gap between laboratory discoveries and clinical applications.")
-        st.write("   CGEDS translates intricate gene-expression interactions into tangible treatment recommendations, emboldening healthcare professionals in their pursuit of optimal patient outcomes.")
-        st.write("3. 🌌 **A Universe of Insights**")
-        st.write("   With the power to analyze multiple cancer types, CGEDS reveals a lot of novel insights that were previously hidden in the labyrinth of data.")
-        st.write("   By bringing together data from different sources, the app paves the way for unprecedented discoveries.")
-        st.write("4. 🎯 **Targeted Medicine, Redefined**")
-        st.write("   CGEDS harnesses the potential of targeted medicine by identifying drugs that hold promise against specific cancer types.")
-        
-    
+        st.markdown("**Advancing Cancer Insights for Enhaced Drug Selection**")
+
+        st.write("Cancer is a global health issue and a leading cause of death, responsible for approximately 9.6 million deaths in 2018. Traditional treatments face challenges due to the complexity of diverse cancer types and the unique genetic profiles of patients. The effectiveness of a drug depends on the specific interaction between genes and cancer cells. So, tailored treatment solutions become crucial as drugs may not perform uniformly across different cancer types and patients.")
+
+        st.write("To assist with some of the challenges in cancer treatment, CGEDS has been developed with the motive to serve as a guide built upon existing data. CGEDS is designed to aid researchers and healthcare professionals in making more informed decisions regarding drug selection.")
+
+        st.markdown("## How It Works?")
+        st.write("CGEDS merges gene expression and drug sensitivity data(IC50 values) for the selected cancer type and using this combined information, it calculates the correlations between gene expressions and drug sensitivities. These correlations offer valuable insights, enabling researchers and healthcare professionals to analyze drug-gene interactions. This data-driven approach enhances our understanding of how drugs may interact with individual patient profiles, empowering more informed treatment decisions. The data used is sourced from publicly accessible repositories, ensuring comprehensive and credible input for the analysis.")
+
 
     elif navigation_option == "cGEDs: Pick the genes and find the best drug":
         #cGEDs app functions
@@ -149,24 +113,29 @@ def main():
         def heatmap_plot(df):
             num_genes = len(df['Gene'].unique())
             num_drugs = len(df['Drug'].unique())
-            figsize = max(3,3,(num_genes * 0.2, num_drugs * 0.2))
+            figsize = max((5,3),(num_genes * 0.2, num_drugs * 0.2))
             
             plt.figure(figsize=figsize)
 
             # Pivot the DataFrame to get genes as rows and drugs as columns
             heatmap_data = df.pivot(index='Drug', columns='Gene', values='Correlation')
             
-            sns.heatmap(heatmap_data, cmap='Spectral', center=0, annot=True, fmt=".2f")
+            ax = sns.heatmap(heatmap_data, center=0, annot=False, linewidth = .5)
+            ax.set(xlabel= "Gene", ylabel="Drug")
+            plt.xticks(fontsize=6) 
+            plt.yticks(fontsize=max(4,num_drugs*0.05)) 
+            #ax.xaxis.tick_top()
             plt.title("Gene-Drug Correlations Heatmap")
-            plt.tight_layout()
-            st.pyplot(plt)
+            #plt.tight_layout()
+            st.pyplot(plt, use_container_width=False)
 
         #convert df to csv for download
-        @st.cache
+        @st.cache_resource
         def convert_df(df):
-	return df.to_csv().encode('utf-8')
+	        return df.to_csv().encode('utf-8')
 
         #correlation calculation
+        @st.cache_resource
         def calculate_correlations(df, fdr_thr, pos_cor_thr, neg_cor_thr, show_data, visualize):
             # Provide a vector of drug names
             # Remove drugs with less than two cell lines
@@ -298,6 +267,15 @@ def main():
         ex = load_geneexp()
         #st.write(ex.shape)
         genes = st.multiselect("Select your desired genes", options=(ex.columns[1:]))
+        st.markdown(
+            """
+            <details>
+                <summary><strong>Note:</strong></summary>
+                <p>For better visualization in the heat map, it is recommended to select at least three genes. Consider this as an optional suggestion, not a requirement.</p>
+            </details>
+            """,
+            unsafe_allow_html=True
+        )
 
         #filtering off the unselected genes
         ex_filtered = pd.DataFrame(columns=['cell_line'])
@@ -332,24 +310,35 @@ def main():
             vis = visualize
             calculated_corrs, show_visualization = calculate_correlations(df, fdr, pos, neg,showdata,vis)
             if not calculated_corrs.empty:
-                        if show_data:
-                            st.write("Calculated and Filtered Data:")
-                            st.write(calculated_corrs)
-            
-                            if show_visualization:
-                                st.write("Heat Map for all genes and drug pairs:")
-                                heatmap_plot(calculated_corrs)
-                                    
-                        else:
-                            if show_visualization:
-                                st.write("Heat Map for all genes and drug pairs:")
-                                heatmap_plot(calculated_corrs)
-                        download_csv = convert_df(calculated_corrs)
-		#download button
-		st.download_button(label="Download data as CSV",  data=download_csv,
-			       file_name='calculated_correlations.csv',  mime='text/csv')
+                if show_data:
+                    st.write("Calculated and Filtered Data:")
+                    st.write(calculated_corrs)
+    
+                    if show_visualization:
+                        st.write("Heat Map for all genes and drug pairs:")
+                        heatmap_plot(calculated_corrs)
+                            
+                else:
+                    if show_visualization:
+                        st.write("Heat Map for all genes and drug pairs:")
+                        heatmap_plot(calculated_corrs)
+                
+
+		        
             else:
-                        st.write("No gene-drug pairs with the given threshold values were found.")
+                st.write("No gene-drug pairs with the given threshold values were found.")
+
+        #download button
+        if st.button("Download data as CSV"):
+            fdr = float(fdr_thr)  
+            pos = float(pos_cor_thr)  
+            neg = float(neg_cor_thr)
+            showdata = show_data
+            vis = visualize
+            calculated_corrs, show_visualization = calculate_correlations(df, fdr, pos, neg,showdata,vis)
+            download_csv = convert_df(calculated_corrs)
+
+            st.download_button(label="Download", data=download_csv, file_name='calculated_correlations.csv', mime='text/csv')
 
 
     
