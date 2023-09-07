@@ -4,7 +4,7 @@
 
 ## Overview
 
-In the face of the global challenge posed by cancer, effective treatment remains a complex endeavor. The unique genetic profiles of patients and the diversity of cancer types complicate traditional therapies. Drug efficacy relies on the intricate interplay between genes and cancer cells. Recognizing these challenges, CGEDS has been developed as a data-driven guide. It aims to assist researchers and healthcare professionals in making more informed decisions about drug selection for personalized cancer treatments.
+In the face of the global challenge posed by cancer, effective treatment remains a complex endeavour. The unique genetic profiles of patients and the diversity of cancer types complicate traditional therapies. Drug efficacy relies on the intricate interplay between genes and cancer cells. Recognizing these challenges, CGEDS has been developed as a data-driven guide. It aims to assist researchers and healthcare professionals in making more informed decisions about drug selection for personalized cancer treatments.
 
 ## How cGEDs Works
 
@@ -13,4 +13,4 @@ CGEDS merges gene expression and drug sensitivity data (IC50 values) for the sel
 
 Explore the app here [here](https://apps.healthuniverse.com/clo-wsa-gvt/).
 
-For support, contact [sabwor07@gmail.com](mailto:sabwor07@gmail.com).
+For support, queries or comments, contact [sabwor07@gmail.com](mailto:sabwor07@gmail.com).
