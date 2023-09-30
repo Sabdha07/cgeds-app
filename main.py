@@ -33,6 +33,8 @@ def main():
         st.title('cGEDs - Cancer Gene Expression and Drug Sensitivity')
         st.write('An application for finding drug effectivity biomarkers in different cancer types')
         st.write('Version:', app_version)
+	st.write('Acknowledgment: All the processed data and biological insights and ideas were developed by the summer 2022 [STEM-AWAY](https://stemaway.com) internship team. We would like to extend our sincere gratitude to the entire team for their hard work and contributions to this project.')
+ 	st.write('The original cGEDs app was developed using R Shiny.')
 
     # ---- SIDEBAR ----
     st.sidebar.title("cGEDs")
