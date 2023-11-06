@@ -14,6 +14,6 @@ In the face of the global challenge posed by cancer, effective treatment remains
 CGEDS merges gene expression and drug sensitivity data (IC50 values) for the selected cancer type and using this combined information, it calculates the correlations between gene expressions and drug sensitivities. These correlations offer valuable insights, enabling researchers and healthcare professionals to analyze drug-gene interactions. This data-driven approach enhances our understanding of how drugs may interact with individual patient profiles, empowering more informed treatment decisions. The data used is sourced from publicly accessible repositories, ensuring comprehensive and credible input for the analysis.
 
 
-Explore the app [here](https://apps.healthuniverse.com/clo-wsa-gvt/).
+Explore the app [here](https://apps.healthuniverse.com/clo-wsa-gvt/) or [here](https://cgeds-app.streamlit.app/).
 
 For support, queries or comments, contact [sabwor07@gmail.com](mailto:sabwor07@gmail.com).
